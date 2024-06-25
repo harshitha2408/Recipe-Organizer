@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Organizer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Recipe Organizer</h1>
+        <div class="form-container">
+            <input type="text" id="recipe-name" placeholder="Recipe Name">
+            <textarea id="recipe-details" placeholder="Recipe Details"></textarea>
+            <button id="add-recipe-btn">Add Recipe</button>
+        </div>
+        <div class="recipes-container">
+            <h2>Recipes</h2>
+            <ul id="recipes-list">
+                <li>
+                    <div class="recipe-info">
+                        <strong>Spaghetti Bolognese</strong>
+                        <p>Ingredients: Spaghetti, minced meat, tomato sauce, garlic, onion, olive oil, salt, pepper.</p>
+                    </div>
+                    <button class="delete-btn">Delete</button>
+                </li>
+                <li>
+                    <div class="recipe-info">
+                        <strong>Chicken Curry</strong>
+                        <p>Ingredients: Chicken, curry powder, coconut milk, garlic, onion, ginger, salt, pepper.</p>
+                    </div>
+                    <button class="delete-btn">Delete</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('add-recipe-btn').addEventListener('click', function() {
+            const recipeName = document.getElementById('recipe-name').value;
+            const recipeDetails = document.getElementById('recipe-details').value;
+
+            if (recipeName === '' || recipeDetails === '') {
+                alert('Please fill in both fields');
+                return;
+            }
+
+            const recipeList = document.getElementById('recipes-list');
+            const li = document.createElement('li');
+
+            const recipeInfo = document.createElement('div');
+            recipeInfo.className = 'recipe-info';
+
+            const strong = document.createElement('strong');
+            strong.textContent = recipeName;
+
+            const p = document.createElement('p');
+            p.textContent = recipeDetails;
+
+            recipeInfo.appendChild(strong);
+            recipeInfo.appendChild(p);
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'delete-btn';
+            deleteBtn.textContent = 'Delete';
+
+            deleteBtn.addEventListener('click', function() {
+                recipeList.removeChild(li);
+            });
+
+            li.appendChild(recipeInfo);
+            li.appendChild(deleteBtn);
+
+            recipeList.appendChild(li);
+
+            document.getElementById('recipe-name').value = '';
+            document.getElementById('recipe-details').value = '';
+        });
+
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const li = this.parentElement;
+                li.parentElement.removeChild(li);
+            });
+        });
+    </script>
+</body>
+</html>
